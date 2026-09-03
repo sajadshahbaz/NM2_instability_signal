@@ -113,7 +113,7 @@ metric_long <- melt(
 metric_long[, metric := factor(
   metric,
   levels = c("median_instability", "median_hetero_gap", "median_discordance"),
-  labels = c("Median instability", "Median hetero_gap", "Median discordance")
+  labels = c("Median instability", "Median divergence component", "Median discordance component")
 )]
 
 masked_summary <- if ("delta_pool" %in% names(all_dt)) {
@@ -190,13 +190,13 @@ p4b <- ggplot(tail_long, aes(x = condition, y = fraction, group = tail)) +
   ) +
   base_theme
 
-# c. Metric decomposition
+# c. Structure-specific metric decomposition
 p4c <- ggplot(metric_long, aes(x = condition, y = value, group = metric)) +
   geom_line(color = "grey35", linewidth = 0.2) +
   geom_point(aes(shape = metric), size = 2.8, color = "black") +
   scale_shape_manual(values = c(16, 17, 15), guide = guide_legend(nrow = 2)) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.10))) +
-  labs(title = "c. Metric decomposition", x = NULL, y = "Median metric value") +
+  labs(title = "c. Structure-specific metric decomposition", x = NULL, y = "Median metric value") +
   annotate(
     "text",
     x = 2.2,
@@ -216,7 +216,7 @@ p4d <- ggplot(masked_summary, aes(x = condition, y = masked_frac, group = 1)) +
     "text",
     x = 3,
     y = max(masked_summary$masked_frac, na.rm = TRUE) * 1.03,
-    label = "Pooling masks signal only in structured data",
+    label = "Masked signals are enriched in structured conditions",
     size = 3.3, hjust = 0.6, vjust = -0.1, color = "grey20"
   ) +
   base_theme

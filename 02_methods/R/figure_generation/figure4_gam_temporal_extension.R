@@ -108,7 +108,7 @@ p_left <- ggplot(dt, aes(x = abs_delta_pool, y = instability_score)) +
     "text",
     x = x_display_max * 0.97,
     y = y_display_max * 0.96,
-    label = "Pooling across time can obscure\ntemporally structured responses",
+    label = "Condition-level summaries can obscure\ntemporally structured responses",
     hjust = 1,
     vjust = 1,
     color = "#B22222",
@@ -123,8 +123,8 @@ p_left <- ggplot(dt, aes(x = abs_delta_pool, y = instability_score)) +
     expand = FALSE
   ) +
   labs(
-    title = "GAM: pooled effect vs instability",
-    x = "|Pooled log2 fold change|",
+    title = "GAM: condition-level effect vs instability",
+    x = "|Condition-level log2 fold change|",
     y = "Instability score"
   ) +
   base_theme
