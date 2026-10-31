@@ -1,0 +1,1 @@
+Historical reconstruction/audit files. These files reconstruct and evaluate an earlier bootstrap-based NM2 effect-stability analysis from archived outputs. They are retained for methodological provenance and are not part of the final manuscript instability computation or figure-generation pipeline.
