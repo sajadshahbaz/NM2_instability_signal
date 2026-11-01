@@ -53,7 +53,7 @@ timepoints <- c("t1", "t2", "t3", "t4", "t5")
 # =========================================================
 panel_flag_fraction <- function(dt) {
   # panel-specific thresholds within one simulation and one structure
-  x_cut <- quantile(abs(dt$delta_pool), 0.50, na.rm = TRUE)
+  x_cut <- quantile(abs(dt$delta_pool), 0.25, na.rm = TRUE)
   y_cut <- quantile(dt$instability_score, 0.90, na.rm = TRUE)
 
   dt[, masked := abs(delta_pool) <= x_cut & instability_score >= y_cut]
