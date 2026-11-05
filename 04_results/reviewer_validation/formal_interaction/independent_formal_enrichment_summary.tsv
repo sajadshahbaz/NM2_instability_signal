@@ -1,0 +1,4 @@
+condition	n_genes	instability_q90	n_top10	n_formal_FDR05	top10_formal_FDR05	top10_not_formal	remaining_formal_FDR05	remaining_not_formal	formal_fraction_top10	formal_fraction_remaining	odds_ratio	fisher_p_greater	fisher_CI_low	fisher_CI_high	test_status
+UV	15187	1.14648872259228	1519	18	18	1501	0	13668	0.0118499012508229	0	Inf	9.16237554503479e-19	50.1797004821821	Inf	TESTED
+DES	15187	1.08893118376071	1519	0	0	1519	0	13668	0	0	NA	NA	NA	NA	NON-INFORMATIVE: zero genes at formal FDR < 0.05
+GAM	15175	1.4077179021523	1518	2931	793	725	2138	11519	0.522397891963109	0.156549754704547	5.89210786453632	1.08549415722079e-206	5.36039547248303	Inf	TESTED

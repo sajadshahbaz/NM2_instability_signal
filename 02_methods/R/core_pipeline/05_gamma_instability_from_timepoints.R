@@ -6,7 +6,13 @@ suppressPackageStartupMessages({
 
 root <- Sys.getenv("NM2_ROOT")
 
-tp_file <- "/home/saji/dtcfsf_test_run/timepoint_profiles_method/TP_all_tests_method.tsv"
+nm2_root <- Sys.getenv("NM2_ROOT")
+if (nm2_root == "") nm2_root <- normalizePath(getwd(), mustWork = TRUE)
+
+tp_file <- file.path(
+  nm2_root,
+  "01_data", "precomputed", "gamma", "gamma_timepoint_effects.tsv"
+)
 
 out_dir <- file.path(root, "04_results/tables")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)

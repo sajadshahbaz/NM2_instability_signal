@@ -1,0 +1,2 @@
+n_genes	n_short_12h	n_long_12h	n_short_control	n_long_control	spearman_rho	pearson_r	n_both_nonzero	direction_concordance_fraction	median_absolute_difference
+15187	3	3	3	3	0.345495919350833	0.391296421003759	13756	0.627362605408549	0.419352833734218

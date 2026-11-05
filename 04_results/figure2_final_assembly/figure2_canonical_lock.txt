@@ -1,0 +1,20 @@
+NM2 Figure 2 canonical lock
+============================
+
+Locked:
+2026-11-04T00:41:34+01:00
+
+Historical pre-Q25 Figure 2:
+13218e76257c910c2a72b7e310f19ce5b1d4b3e926ec1728fa850e0257fff235  04_results/figure2_final_assembly/Fig2_synthetic_validation_PRE_Q25_BACKUP.tiff
+
+Corrected canonical Figure 2:
+d1c7dfc1b57c0f668047ecbc5e07575def384b4e79fe4f308c257e0471ce0e00  03_figures/main/Fig2_synthetic_validation.tiff
+
+Correction:
+Panel C synchronized to the manuscript-defined Q25/Q90 masking rule.
+Opposing mean fraction = 0.13835
+Phase mean fraction = 0.13945
+
+Panel A preserved.
+Panel B regenerated from locked synthetic analysis.
+Panel C regenerated from corrected Q25/Q90 analysis.

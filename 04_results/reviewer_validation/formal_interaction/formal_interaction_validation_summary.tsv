@@ -1,0 +1,4 @@
+condition	n_samples	n_genes	interaction_coefficient	n_FDR_0.05	n_FDR_0.10	spearman_instability_abs_t	spearman_instability_neglog10p
+uv	48	15187	treatmenttreatment:blocklong	18	56	0.932027467045849	0.932027467045849
+des	12	15187	treatmenttreatment:blockslow	0	57	0.833941288083378	0.833941288083378
+gam	27	15175	omnibus treated-timepoint heterogeneity	2931	4276	0.583987307092509	0.583987307092509

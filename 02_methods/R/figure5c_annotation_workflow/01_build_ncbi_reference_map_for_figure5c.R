@@ -112,11 +112,11 @@ write_csv(ref_map, file.path(out_dir, "figure5c_ncbi_reference_map.csv"))
 meta_lines <- c(
   "Figure 5C NCBI reference metadata",
   "Organism: Ramazzottius varieornatus",
-  "Source: NCBI Datasets taxonomy page https://www.ncbi.nlm.nih.gov/datasets/taxonomy/947166/",
-  paste0("NCBI root: ", ncbi_root),
-  paste0("CDS FASTA: ", cds_fa),
-  paste0("Protein FASTA: ", prot_fa),
-  paste0("Build date: ", Sys.time())
+  "Assembly accession: GCA_001949185.1",
+  "Source: NCBI GenBank",
+  "NCBI root: 01_data/raw/ncbi_dataset/ncbi_dataset/data/GCA_001949185.1",
+  "CDS FASTA: 01_data/raw/ncbi_dataset/ncbi_dataset/data/GCA_001949185.1/cds_from_genomic.fna",
+  "Protein FASTA: 01_data/raw/ncbi_dataset/ncbi_dataset/data/GCA_001949185.1/protein.faa"
 )
 writeLines(meta_lines, meta_file)
 

@@ -26,3 +26,7 @@ config/config_real_local.yaml
 
 # Optional backups
 .~lock*
+
+# Python cache
+__pycache__/
+*.py[cod]

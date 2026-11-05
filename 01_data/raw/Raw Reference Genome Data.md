@@ -1,137 +1,67 @@
 # Raw Reference Genome Data
 
-## Description
+## Reference Assembly
 
-This directory contains information and reference resources associated with the genome assembly used for annotation and functional characterization analyses in the NM2 instability-signal study.
-
-Reference assembly:
+The annotation-related NM2 analyses use the following public reference assembly:
 
 ```text
-Ramazzottius varieornatus
+Organism: Ramazzottius varieornatus
 Assembly accession: GCA_001949185.1
 Source: NCBI GenBank
 ```
 
-The original assembly, annotations, and associated metadata are publicly available through NCBI.
+## Role in the NM2 Workflow
 
----
+The manuscript-level NM2 workflow operates on distributed processed expression matrices and metadata. It does not require genome assembly or RNA-seq alignment from raw sequencing reads.
 
-## Data Source
+The final Figure 5 annotation workflow additionally requires two NCBI-derived reference files:
 
-Assembly accession:
+```text
+cds_from_genomic.fna
+protein.faa
+```
+
+These files support gene-to-reference mapping, protein extraction, annotation matching, and downstream functional characterization.
+
+## External Reference Preparation
+
+The NCBI reference FASTA files are public external resources and are intentionally not committed to Git.
+
+The repository provides a version-locked preparation script:
+
+```bash
+bash 02_methods/reference_data/prepare_ncbi_reference.sh
+```
+
+The script retrieves the required data for exactly:
 
 ```text
 GCA_001949185.1
 ```
 
-Organism:
+and prepares:
 
 ```text
-Ramazzottius varieornatus
+01_data/raw/ncbi_dataset/ncbi_dataset/data/GCA_001949185.1/cds_from_genomic.fna
+01_data/raw/ncbi_dataset/ncbi_dataset/data/GCA_001949185.1/protein.faa
 ```
 
-Assembly provider:
+The preparation step requires the NCBI Datasets command-line client and `unzip`.
+
+The script validates that both required files exist and are non-empty. If a complete reference is already present, it is reused rather than downloaded again.
+
+## Git Boundary
+
+The downloaded raw-reference tree is ignored under:
 
 ```text
-NCBI GenBank
+01_data/raw/ncbi_dataset/
 ```
 
-Original assembly page:
+The external reference therefore remains outside the version-controlled repository while the acquisition procedure and assembly accession remain version controlled.
 
-```text
-https://www.ncbi.nlm.nih.gov/assembly/GCA_001949185.1
-```
+## Scope
 
----
+The complete genomic FASTA, GenBank file, GFF, and GTF are not required by the current manuscript master runner.
 
-## Purpose Within This Repository
-
-The NM2 repository does not reproduce genome assembly, genome annotation, or RNA-seq alignment from raw sequencing reads.
-
-Instead, processed expression matrices and curated metadata are used for the instability analyses described in the manuscript.
-
-Reference annotation resources derived from assembly GCA_001949185.1 are used for:
-
-* gene mapping
-* annotation matching
-* functional characterization
-* Figure 5 annotation analyses
-* supplementary annotation resources
-
----
-
-## Files Included in This Repository
-
-The following reference files are included because they are required for reproducing annotation-related analyses and associated repository outputs:
-
-```text
-cds_from_genomic.fna
-protein.faa
-genomic.gff
-genomic.gtf
-```
-
-These files are sufficient for reproducing the Figure 5 annotation workflow and associated outputs included in this repository.
-
----
-
-## Files Omitted From GitHub
-
-The following large files were used during exploratory annotation development but are not required for reproducing the final NM2 analyses, figures, supplementary outputs, or repository audit results:
-
-```text
-GCA_001949185.1_Rvar_4.0_genomic.fna
-genomic.gbff
-```
-
-These files can be obtained directly from the original NCBI assembly distribution.
-
-They may also be preserved in the archival Zenodo release associated with this repository.
-
-Removal of these files does not affect reproduction of:
-
-* manuscript figures
-* supplementary figures
-* supplementary tables
-* annotation outputs
-* repository audit results
-* instability-versus-variance analyses
-
----
-
-## Reproducibility
-
-Users may reproduce repository outputs by:
-
-1. Using the processed datasets distributed with this repository.
-2. Using the included reference annotation resources listed above.
-3. Downloading the complete assembly package directly from NCBI if additional genome-level analyses are desired.
-4. Using the archival Zenodo release accompanying this repository.
-
-Repository-wide reproducibility instructions are available in:
-
-```text
-README.md
-REPOSITORY_MAP.md
-docs/repository_structure.md
-docs/reproducibility.md
-```
-
----
-
-## Citation
-
-Hashimoto T, Horikawa DD, Saito Y, Kuwahara H, Kozuka-Hata H, Shin-I T, et al.
-
-Genome sequencing and analysis of the tardigrade Ramazzottius varieornatus.
-
-Nature Communications. 2016;7:12808.
-
----
-
-## Notes
-
-This repository is intended to reproduce the NM2 instability-signal analyses and manuscript outputs.
-
-The files distributed here are not intended to replace the complete NCBI assembly package and should be considered a minimal reference resource necessary for reproducing repository analyses.
-
+Only the CDS and protein FASTA resources above are required by the final Figure 5 annotation workflow.

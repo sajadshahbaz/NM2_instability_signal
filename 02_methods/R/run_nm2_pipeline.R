@@ -38,6 +38,7 @@ core_scripts <- c(
   "02_methods/R/core_pipeline/03_tail_divergence.R",
   "02_methods/R/core_pipeline/04_make_core_table.R",
   "02_methods/R/core_pipeline/05_gamma_instability_from_timepoints.R",
+  "02_methods/R/core_pipeline/06_bootstrap_instability_uncertainty.R",
   "02_methods/R/core_pipeline/07_gate3_instability_vs_variance.R",
   "02_methods/R/core_pipeline/08_gate4_regime_conflict_enrichment.R"
   )
@@ -62,7 +63,8 @@ figure_scripts <- c(
   "02_methods/R/figure5c_annotation_workflow/04_merge_annotation_and_make_figure5c.R",
   "02_methods/R/figure5c_annotation_workflow/00_validate_mapping_integrity.R",
   "02_methods/R/figure_generation/figure5d_curated_examples_table.R",
-  "02_methods/R/figure_generation/figure5e_functional_composition.R"
+  "02_methods/R/figure_generation/figure5e_functional_composition.R",
+  "02_methods/R/figure_generation/figure6_variance_disentanglement.R"
 )
 
 all_scripts <- c(core_scripts, figure_scripts)

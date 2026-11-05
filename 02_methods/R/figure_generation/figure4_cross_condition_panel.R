@@ -134,6 +134,37 @@ masked_summary <- if ("delta_pool" %in% names(all_dt)) {
   )
 }
 
+# Bootstrap uncertainty for masked-gene fractions
+# Authoritative B=500 biological-sample bootstrap summary.
+bootstrap_file <- file.path(
+  nm2_root, "04_results", "validation", "bootstrap_uncertainty",
+  "NM2_final_bootstrap_masked_fraction_summary.tsv"
+)
+if (!file.exists(bootstrap_file)) {
+  stop("Missing bootstrap summary: ", bootstrap_file,
+       "\nRun 02_methods/R/core_pipeline/06_bootstrap_instability_uncertainty.R first.")
+}
+bootstrap_summary <- fread(bootstrap_file)
+needed_boot <- c("B", "condition", "bootstrap_sd_fraction")
+missing_boot <- setdiff(needed_boot, names(bootstrap_summary))
+if (length(missing_boot) > 0) {
+  stop("Bootstrap summary missing columns: ", paste(missing_boot, collapse=", "))
+}
+bootstrap_sd <- bootstrap_summary[
+  B == 500 & condition %in% c("UV","DES","GAM"),
+  .(condition_chr = condition, bootstrap_sd = bootstrap_sd_fraction)
+]
+if (nrow(bootstrap_sd) != 3L ||
+    !setequal(bootstrap_sd$condition_chr, c("UV","DES","GAM"))) {
+  stop("Expected exactly one B=500 bootstrap SD for UV, DES, and GAM.")
+}
+masked_summary[, condition_chr := as.character(condition)]
+masked_summary <- merge(masked_summary, bootstrap_sd,
+                        by="condition_chr", all.x=TRUE, sort=FALSE)
+masked_summary[, condition := factor(condition_chr, levels=present_levels)]
+masked_summary[, condition_chr := NULL]
+setorder(masked_summary, condition)
+
 fwrite(tail_summary,   file.path(outdir, "figure4_tail_summary.tsv"), sep = "\t")
 fwrite(metric_summary, file.path(outdir, "figure4_metric_summary.tsv"), sep = "\t")
 fwrite(masked_summary, file.path(outdir, "figure4_masked_summary.tsv"), sep = "\t")
@@ -207,8 +238,20 @@ p4c <- ggplot(metric_long, aes(x = condition, y = value, group = metric)) +
   base_theme
 
 # d. Masked fraction
+# Points: observed-data fractions; error bars: +/- 1 SD from B=500 bootstrap.
+# LT is shown without an error bar because no analogous bootstrap SD is assigned.
 p4d <- ggplot(masked_summary, aes(x = condition, y = masked_frac, group = 1)) +
   geom_line(color = "grey35", linewidth = 0.2) +
+  geom_errorbar(
+    aes(
+      ymin = pmax(0, masked_frac - bootstrap_sd),
+      ymax = masked_frac + bootstrap_sd
+    ),
+    width = 0.12,
+    linewidth = 0.55,
+    color = accent_mask,
+    na.rm = TRUE
+  ) +
   geom_point(size = 2.8, color = accent_mask) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.10))) +
   labs(title = "d. Masked-gene fraction", x = NULL, y = "Fraction of genes") +

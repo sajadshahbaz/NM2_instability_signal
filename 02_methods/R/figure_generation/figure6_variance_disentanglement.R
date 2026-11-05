@@ -11,7 +11,8 @@ if (nm2_root == "") stop("NM2_ROOT not set")
 
 in_file <- file.path(
   nm2_root,
-  "04_results", "synthetic_validation_v2", "tables", "synthetic_scenario_summary.tsv"
+  "05_supplementary", "instability_vs_variance",
+  "synthetic_benchmarks", "synthetic_scenario_summary.tsv"
 )
 
 out_dir <- file.path(nm2_root, "04_results", "figure6_variance_disentanglement_FINAL")

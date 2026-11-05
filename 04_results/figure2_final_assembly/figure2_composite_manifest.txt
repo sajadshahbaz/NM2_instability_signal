@@ -1,0 +1,53 @@
+NM2 Figure 2 reproducible composite manifest
+============================================
+
+Generated:
+2026-11-05T02:51:34+01:00
+
+Repository root:
+.
+
+Assembly script:
+02_methods/R/figure_generation/assemble_figure2_composite.sh
+
+Scientific interpretation:
+Panel A: locked conceptual graphical asset.
+Panel B: regenerated synthetic pooled-vs-structured analysis.
+Panel C: regenerated corrected Q25/Q90 masking analysis.
+
+Corrected Figure 2C values:
+coherent = 0
+null = 0.000485714285714286
+opposing = 0.13835
+phase = 0.13945
+
+Software:
+Version: ImageMagick 6.9.12-98 Q16 x86_64 18038 https://legacy.imagemagick.org
+Python 3.12.11
+
+INPUT SHA256
+------------
+82bd92bd3aabacab66ef59329f9c9c0ce56279fd9beb688ca00cf7e439446ab8  01_data/precomputed/figure_assets/figure2A_conceptual_locked.png
+b94f757ee469c2e38d7c3e5e547fd3a61812cc02c3ab711e0dc8e16f626794e2  04_results/figure2b/figure2B_final_lock.png
+8844375e6d4423895d7cb9df94201c49e70e7203a5dfd5be56bc5d73924ce39f  04_results/figure2c/figure2C_final_lock.png
+0fd84585585bb3dd44bae8bfce4bbfe28e741fdbaac28a4e65391380474ef9fe  04_results/figure2c/figure2C_summary_stats.tsv
+
+DERIVED SHA256
+--------------
+b09641e9e75854ccdd82e962b41efba1161bd4bba0ffda5f6f70f64fd8829608  04_results/figure2_final_assembly/figure2B_normalized.png
+5dd614ad0fbda636c61c65ce4f14b685cbb405344320468910bedb50c8abdb69  04_results/figure2_final_assembly/figure2C_normalized.png
+fb209d96541e042fc3bcacb56ccb100466d3a04fe14e0f30ca331346bdbdf36e  04_results/figure2_final_assembly/figure2B_cell.png
+15092fa366a41a00f07411bc30c4d8c331e97430a5d45671b60e4807b819768a  04_results/figure2_final_assembly/figure2C_cell.png
+9b590f1fa5ba0a8b110080f026eb18d0d080b66b1023be54d9c7aa1b1bf4290f  04_results/figure2_final_assembly/figure2_BC_row.png
+d1c7dfc1b57c0f668047ecbc5e07575def384b4e79fe4f308c257e0471ce0e00  04_results/figure2_final_assembly/Fig2_synthetic_validation_CANDIDATE.tiff
+416e68ae7b578e25092afbc2e46cb8900ec31c611fe5f5ff6adceada782cd0b5  04_results/figure2_final_assembly/Fig2_synthetic_validation_CANDIDATE.png
+
+DIMENSIONS
+----------
+01_data/precomputed/figure_assets/figure2A_conceptual_locked.png PNG 4652x1370
+04_results/figure2b/figure2B_final_lock.png PNG 4800x3000
+04_results/figure2c/figure2C_final_lock.png PNG 3600x2700
+04_results/figure2_final_assembly/figure2B_normalized.png PNG 2112x1320
+04_results/figure2_final_assembly/figure2C_normalized.png PNG 1760x1320
+04_results/figure2_final_assembly/figure2_BC_row.png PNG 4652x1320
+04_results/figure2_final_assembly/Fig2_synthetic_validation_CANDIDATE.tiff TIFF 4652x2690

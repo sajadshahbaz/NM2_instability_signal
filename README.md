@@ -1,164 +1,189 @@
-# NM2: Instability-Based Detection of Structured Heterogeneity in Transcriptomic Data
+# NM2 Instability Signal
 
-## Overview
+This repository contains the analysis code, processed inputs, reproducibility resources, generated results, and manuscript figure assets for the NM2 instability-signal study.
 
-NM2 (Instability Signal) is a computational framework designed to identify structured heterogeneity that can be attenuated or underrepresented by pooled transcriptomic analyses. Rather than focusing solely on average effect size, NM2 quantifies disagreement among biologically meaningful partitions such as subgroups, exposure regimes, or timepoints.
-
-The framework was developed and evaluated using RNA-seq datasets from *Ramazzottius varieornatus* under multiple stress conditions, including ultraviolet radiation (UV), desiccation (DES), gamma radiation (GAM), and low temperature (LT).
-
-The accompanying manuscript demonstrates that instability identifies genes exhibiting structured subgroup-dependent or temporally heterogeneous responses that may be attenuated under pooled analysis.
-
----
+The central analysis asks when a pooled condition-level summary becomes misleading because biologically structured subgroup or temporal responses disagree internally. Instability is used as a diagnostic of that structured internal disagreement; it is not a replacement for differential-expression testing.
 
 ## Repository Structure
 
 ```text
-NM2_instability_signal/
-├── 01_data/
-├── 02_methods/
-├── 03_figures/
-├── 04_results/
-├── 05_supplementary/
-├── manuscript/
-└── docs/
+00_config/                  Configuration and analysis settings
+01_data/
+  metadata/                 Sample metadata
+  processed/                Processed expression inputs
+  precomputed/              Frozen/precomputed analysis resources
+  raw/                      External-reference location and documentation
+02_methods/
+  preprocessing/            Optional reconstructed upstream preprocessing workflow
+  reference_data/           External reference preparation
+  R/
+    core_pipeline/          Core instability analyses
+    figure_generation/      Manuscript figure-generation scripts
+    figure5c_annotation_workflow/
+                            Figure 5 annotation workflow
+    reviewer_validation/    Revision-specific validation analyses
+03_figures/
+  main/                     Canonical main manuscript figures
+04_results/                 Generated analysis outputs and tables
+05_supplementary/
+  supplementary_figures/    Supplementary manuscript figures
+  supplementary_tables/     Supplementary manuscript tables
+  instability_vs_variance/  Supporting instability/variance analyses
+docs/                       Reproducibility and audit documentation
+env/                        Environment-related files
 ```
 
----
+## Main Reproduction Workflow
 
-## Core Components
+From the repository root, first prepare the required public NCBI reference:
 
-### `02_methods/R/core_pipeline/`
+```bash
+bash 02_methods/reference_data/prepare_ncbi_reference.sh
+```
 
-Core analytical workflow for pooled and structured analyses, instability calculation, heterogeneity assessment, and summary table generation.
+The reference preparation is locked to NCBI GenBank assembly:
 
-### `02_methods/R/figure_generation/`
+```text
+GCA_001949185.1
+```
 
-Scripts used to generate manuscript figures.
+The downloaded CDS and protein FASTA files are intentionally excluded from Git.
 
-### `02_methods/R/figure5c_annotation_workflow/`
+Then run the manuscript analysis:
 
-Supporting workflow used for biological annotation and functional characterization of instability-prioritized genes.
+```bash
+bash run_all.sh
+```
 
-### `02_methods/R/archive/`
-
-Development and exploratory scripts retained for transparency but not required for manuscript reproduction.
-
----
-
-## Main Figures
-
-| Figure | Description |
-| ------ | ----------- |
-| Fig. 1 | Conceptual illustration of pooling-induced masking |
-| Fig. 2 | Synthetic validation of instability |
-| Fig. 3 | UV instability and masked regulatory signals |
-| Fig. 4 | Cross-condition heterogeneity patterns |
-| Fig. 5 | Prioritization divergence and biological interpretation |
-| Fig. 6 | Instability versus variance disentanglement |
-
----
-
-# Reproducing the Manuscript
-
-The complete manuscript workflow can be reproduced from a clean repository checkout using:
+which executes:
 
 ```bash
 Rscript 02_methods/R/run_nm2_pipeline.R
 ```
 
-### Example Input Datasets
+The master runner starts from the distributed processed expression matrices and metadata. It does not require regeneration of those matrices from FASTQ files.
 
-The repository includes the processed datasets required to reproduce the manuscript analyses.
+## Figure 2 Composite
 
-**Processed expression matrices**
+The R master runner regenerates the analytical Figure 2 panels. Final Figure 2 composite assembly is a separate deterministic step:
 
-```text
-01_data/processed/
-    vst_counts_filtered.tsv
-    x_count_filt.csv
+```bash
+bash 02_methods/R/figure_generation/assemble_figure2_composite.sh
 ```
 
-**Sample metadata**
+The canonical manuscript asset is:
 
 ```text
-01_data/metadata/
-    Simplified_Metadata_Table.core.csv
+03_figures/main/Fig2_synthetic_validation.tiff
 ```
 
-**Reference genome and annotation resources**
+## Figure 5 External and Precomputed Resources
 
-```text
-01_data/raw/
-    Raw Reference Genome Data.md
-```
+The Figure 5 annotation workflow requires the external NCBI CDS/protein reference prepared above.
 
-### Expected Output
-
-Running the pipeline reproduces the manuscript analyses and generates manuscript figures, summary tables, and intermediate outputs in:
-
-```text
-04_results/
-```
-
-The master runner executes analytical scripts as isolated `Rscript --vanilla` processes.
-
-Resources requiring external software are supplied as bundled precomputed files to ensure reproducibility.
-
-### Figure 5e Annotation Resources
-
-Figure 5e uses supplied InterProScan and Pfam/HMMER outputs included in:
+Figure 5e additionally uses bundled precomputed Pfam/HMMER and InterProScan outputs under:
 
 ```text
 01_data/precomputed/figure5e_annotation/
 ```
 
-The manuscript pipeline does not rerun external annotation software.
+These precomputed resources are copied to their runtime result location by the master workflow. The repository does not rerun Pfam/HMMER or InterProScan.
 
-### Figure 6 Variance Package
+## Reviewer-Driven Validation
 
-Figure 6 source files are bundled as precomputed resources in:
-
-```text
-01_data/precomputed/figure6/
-```
-
----
-
-## Supplementary Materials
-
-Supplementary figures, tables, and supporting analyses are available in:
+Revision-specific robustness analyses are maintained separately under:
 
 ```text
-05_supplementary/
+02_methods/R/reviewer_validation/
 ```
 
-### Instability versus Variance Package
+with outputs under:
 
 ```text
-05_supplementary/instability_vs_variance/
+04_results/reviewer_validation/
 ```
 
-This directory contains:
+They are not executed by the master manuscript runner. This keeps reviewer-response validation separate from the locked core analysis.
 
-- Correlation analyses
-- Regression models
-- Synthetic benchmarks
-- Supporting raw tables
+## Optional Upstream Preprocessing
 
----
-
-## Manuscript
-
-The manuscript source files used for submission are available in:
+A reconstructed preprocessing workflow is provided under:
 
 ```text
-manuscript/
+02_methods/preprocessing/
 ```
 
----
+This workflow documents the route from upstream sequencing inputs toward the processed matrices used by the manuscript analysis.
 
-## Citation
+It is intentionally separate from the main manuscript reproduction command.
 
-If you use this repository, please cite the associated publication.
+## Canonical Main Figures
 
-Citation information will be updated upon acceptance or publication of the associated manuscript.
+```text
+03_figures/main/Fig1_conceptual_masking.tiff
+03_figures/main/Fig2_synthetic_validation.tiff
+03_figures/main/Fig3_uv_instability.tiff
+03_figures/main/Fig4_cross_condition_specificity.tif
+03_figures/main/Fig5_prioritization_divergence.tiff
+03_figures/main/Fig6_variance_disentanglement.tiff
+```
+
+## Supplementary Material
+
+Supplementary figures:
+
+```text
+05_supplementary/supplementary_figures/
+```
+
+Supplementary tables:
+
+```text
+05_supplementary/supplementary_tables/
+```
+
+The current supplementary tables include:
+
+```text
+TableS1_metadata.csv
+TableS2_representative_masked_genes.csv
+TableS3_annotations.xlsx
+```
+
+## Validation Utilities
+
+Lightweight smoke test:
+
+```bash
+bash run_smoke.sh
+```
+
+Manuscript-output inventory audit:
+
+```bash
+bash run_figure_output_audit.sh
+```
+
+Detailed reproducibility documentation:
+
+```text
+docs/reproducibility.md
+```
+
+Figure code-to-output audit:
+
+```text
+docs/FIGURE_REPRODUCIBILITY_AUDIT.md
+```
+
+Repository map:
+
+```text
+REPOSITORY_MAP.md
+```
+
+## Reproducibility Status
+
+The repository is structured to support a controlled release-level reproduction check.
+
+A specific release should only be described as fully reproducibility-tested after the external reference preparation, smoke test, complete master run, Figure 2 composite verification, output audit, and final Git review have all succeeded for that release candidate.
